@@ -1,3 +1,5 @@
+// +build what whatis
+
 package what
 
 import (
