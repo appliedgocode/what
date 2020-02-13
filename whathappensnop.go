@@ -1,6 +1,6 @@
-// + build !what,!whathappens
+// +build !what,!whathappens
 
 package what
 
 func Happens(fmt string, args ...interface{}) {}
-func If(bool, string, ...interface{}) {}
+func If(bool, string, ...interface{})         {}
