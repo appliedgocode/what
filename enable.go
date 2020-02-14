@@ -12,10 +12,10 @@ import (
 var enabled map[string]bool
 
 func isPackageEnabled() bool {
-	if enabled[pkgname(3)] { // skip isPackageEnabled and the top-level what.X function
+	if len(enabled) == 0 {  // all packages enabled
 		return true
-	}
-	return false
+	)
+	return enabled[pkgname(3)] // 3 = skip isPackageEnabled and the top-level what.X function
 }
 
 func pkgname(skip int) string {
@@ -54,6 +54,8 @@ func init() {
 	packages := strings.Split(os.Getenv("WHAT"), ",")
 	enabled = map[string]bool{}
 	for _, p := range packages {
-		enabled[p] = true
+		if p != "" {
+			enabled[p] = true
+		}
 	}
 }
