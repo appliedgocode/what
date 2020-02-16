@@ -12,42 +12,65 @@ import (
 var enabled map[string]bool
 
 func isPackageEnabled() bool {
-	if len(enabled) == 0 {  // all packages enabled
+	if len(enabled) == 0 { // all packages enabled
 		return true
-	)
-	return enabled[pkgname(3)] // 3 = skip isPackageEnabled and the top-level what.X function
+	}
+	pkg, prnt := pkgname(3) // 3 = skip isPackageEnabled and the top-level what.X function
+	if enabled[pkg] {
+		return true
+	}
+	if enabled[pkg+"/"+prnt] {
+		return true
+	}
+	return false
 }
 
-func pkgname(skip int) string {
+// pkgname returns the package name and the direct parent in the package path
+// of the skip'th caller
+func pkgname(skip int) (string, string) {
 	pc, _, _, _ := runtime.Caller(skip)
 	fn := runtime.FuncForPC(pc).Name()
 	log.Println("fn:", fn)
-	// fn looks like /some/path/to/package.(Receiver).Func
-	// or like /some/path/to/package.Func.func1 for anonymous funcs inside Func
-	// or just /some/path/to/package.Func
-	// so the package name is always the string between
-	// the last "/" and the first "."
+	// possible fn formats:
+	// * /some/path/to/package.(Receiver).Func
+	// * /some/path/to/package.Func.func1 (closure)
+	// * /some/path/to/package.Func
+	// * pathto/package.Func
+	// fn cannot be just package.Func, unless someone hacks the stdlib and puts `what` calls there
 
-	start, end := 0, 0
+	startName, startParent, endName := 0, 0, 0
+
+	// Search the last /, it is the beginning of the package name
 	for i := len(fn) - 1; i >= 0; i-- {
 		if fn[i] == '/' {
-			start = i + 1
+			startName = i + 1
 			break
 		}
 	}
 
-	if start == 0 {
-		return ""
+	if startName == 0 {
+		return "", ""
 	}
 
-	for i := start; i < len(fn); i++ {
+	// Search the first dot after the last /, it is the end of the package name
+	for i := startName; i < len(fn); i++ {
 		if fn[i] == '.' {
-			end = i
+			endName = i
 			break
 		}
 	}
 
-	return fn[start:end]
+	// Search the second-last /, it is the beginning of the parent's name
+	endParent := startName - 1
+	for i := endParent - 1; i >= 0; i-- {
+		if fn[i] == '/' {
+			startParent = i + 1
+			break
+		}
+	}
+	// startParent is 0 in case of pathto/package.Func
+
+	return fn[startName:endName], fn[startParent:endParent]
 }
 
 func init() {

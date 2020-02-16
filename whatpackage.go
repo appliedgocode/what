@@ -7,5 +7,10 @@ import (
 )
 
 func Package() {
-	log.Println("Package", pkgname(2))
+	pkg, prnt := pkgname(2)
+	if len(pkg) > 0 {
+		log.Printf("Package %s/%s", prnt, pkg)
+	} else {
+		log.Printf("Package %s", pkg)
+	}
 }
