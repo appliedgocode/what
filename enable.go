@@ -3,7 +3,6 @@
 package what
 
 import (
-	"log"
 	"os"
 	"runtime"
 	"strings"
@@ -19,7 +18,7 @@ func isPackageEnabled() bool {
 	if enabled[pkg] {
 		return true
 	}
-	if enabled[pkg+"/"+prnt] {
+	if enabled[prnt+"/"+pkg] {
 		return true
 	}
 	return false
@@ -30,7 +29,6 @@ func isPackageEnabled() bool {
 func pkgname(skip int) (string, string) {
 	pc, _, _, _ := runtime.Caller(skip)
 	fn := runtime.FuncForPC(pc).Name()
-	log.Println("fn:", fn)
 	// possible fn formats:
 	// * /some/path/to/package.(Receiver).Func
 	// * /some/path/to/package.Func.func1 (closure)

@@ -14,7 +14,7 @@ func Test_pkgname(t *testing.T) {
 	}{
 		{
 			"what",
-			"appliedgo/what",
+			"appliedgo.net/what",
 		},
 	}
 	for _, tt := range tests {

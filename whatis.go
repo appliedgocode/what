@@ -3,10 +3,12 @@
 package what
 
 import (
-	"github.com/k0kubun/pp"
+	"log"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 // Is pretty-prints data.
 func Is(v interface{}) {
-	pp.Print(v)
+	spew.Fdump(log.Writer(), v)
 }
