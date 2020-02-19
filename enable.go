@@ -71,7 +71,7 @@ func pkgname(skip int) (string, string) {
 	return fn[startName:endName], fn[startParent:endParent]
 }
 
-func init() {
+func getenvWhat() {
 	packages := strings.Split(os.Getenv("WHAT"), ",")
 	enabled = map[string]bool{}
 	for _, p := range packages {
@@ -79,4 +79,8 @@ func init() {
 			enabled[p] = true
 		}
 	}
+}
+
+func init() {
+	getenvWhat()
 }
