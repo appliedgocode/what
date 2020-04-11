@@ -1,8 +1,13 @@
 package what
 
+// IMPORTANT: to run these tests, use build tag "what":
+//
+// go test -tags what
+
 import (
 	"bytes"
 	"log"
+	"regexp"
 	"testing"
 )
 
@@ -36,16 +41,15 @@ func TestAll(t *testing.T) {
 	}
 	Happens("what.Happens - package 'what' NOT enabled") // this should not print
 
-	want := `appliedgo.net/what.TestAll: what.Happens - all packages enabled
-appliedgo.net/what.If: If true
-(int) 23
-Func appliedgo.net/what.TestAll in line 21 of file /Users/christoph/dev/go/what/what_test.go
+	wantRE := regexp.MustCompilePOSIX(`appliedgo.net/what\.TestAll: what\.Happens - all packages enabled
+appliedgo\.net/what\.If: If true
+\(int\) 23
+Func appliedgo.net/what\.TestAll in line \d\+ of file .*/what_test.go
 Package appliedgo.net/what
-appliedgo.net/what.TestAll: what.Happens - package 'what' enabled
-appliedgo.net/what.TestAll: what.Happens - package 'appliedgo.net/what' enabled
-`
-
-	if got.String() != want {
-		t.Errorf("Got: %s\n\nWant: %s", got, want)
+appliedgo\.net/what\.TestAll: what.Happens - package 'what' enabled
+appliedgo\.net/what\.TestAll: what.Happens - package 'appliedgo\.net/what' enabled
+`)
+	if !wantRE.Match(got.Bytes()) {
+		t.Errorf("Got: %s\n\nWant: %s", got, wantRE.Find(got.Bytes()))
 	}
 }
