@@ -4,7 +4,6 @@ package what
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"reflect"
 	"testing"
