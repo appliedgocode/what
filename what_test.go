@@ -13,8 +13,8 @@ import (
 
 func TestAll(t *testing.T) {
 	got := &bytes.Buffer{}
-	log.SetOutput(got)
-	log.SetFlags(0)
+	log.SetOutput(got) // write all log output into "got" for later matching
+	log.SetFlags(0)    // no extra decorations
 	n := 23
 
 	// no package name set - all packages are enabled
@@ -49,6 +49,7 @@ Package appliedgo.net/what
 appliedgo\.net/what\.TestAll: what.Happens - package 'what' enabled
 appliedgo\.net/what\.TestAll: what.Happens - package 'appliedgo\.net/what' enabled
 `)
+	// "got" contains all log output from the above calls
 	if !wantRE.Match(got.Bytes()) {
 		t.Errorf("Got: %s\n\nWant: %s", got, wantRE.Find(got.Bytes()))
 	}
