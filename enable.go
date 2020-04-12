@@ -34,7 +34,8 @@ func pkgname(skip int) (string, string) {
 	// * /some/path/to/package.Func.func1 (closure)
 	// * /some/path/to/package.Func
 	// * pathto/package.Func
-	// fn cannot be just package.Func, unless someone hacks the stdlib and puts `what` calls there
+	// * package.Func (for package main, and if someone hacks
+	//   the stdlib and adds `what` calls there.)
 
 	startName, startParent, endName := 0, 0, 0
 
@@ -45,10 +46,7 @@ func pkgname(skip int) (string, string) {
 			break
 		}
 	}
-
-	if startName == 0 {
-		return "", ""
-	}
+	// post loop assert: startName is either 0 (for package main) or i+1
 
 	// Search the first dot after the last /, it is the end of the package name
 	for i := startName; i < len(fn); i++ {
@@ -56,6 +54,11 @@ func pkgname(skip int) (string, string) {
 			endName = i
 			break
 		}
+	}
+
+	// no leading / found means we are probably in package main.
+	if startName == 0 {
+		return fn[0:endName], ""
 	}
 
 	// Search the second-last /, it is the beginning of the parent's name
