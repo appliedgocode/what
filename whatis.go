@@ -12,3 +12,8 @@ import (
 func Is(v interface{}) {
 	spew.Fdump(log.Writer(), v)
 }
+
+func init() {
+	// Default indent of one space is too narrow for my taste
+	spew.Config.Indent = "  "
+}
