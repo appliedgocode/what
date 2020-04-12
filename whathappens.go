@@ -14,7 +14,7 @@ func Happens(fmt string, args ...interface{}) {
 }
 
 func If(yes bool, fmt string, args ...interface{}) {
-	if yes {
-		Happens(fmt, args...)
+	if yes && isPackageEnabled() {
+		log.Printf(funcname(2)+": "+fmt+"\n", args...)
 	}
 }

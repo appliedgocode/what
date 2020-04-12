@@ -42,7 +42,7 @@ func TestAll(t *testing.T) {
 	Happens("what.Happens - package 'what' NOT enabled") // this should not print
 
 	wantRE := regexp.MustCompile(`appliedgo.net/what\.TestAll: what\.Happens - all packages enabled
-appliedgo\.net/what\.If: If true
+appliedgo\.net/what\.TestAll: If true
 \(int\) 23
 Func appliedgo.net/what\.TestAll in line \d+ of file .*/what_test.go
 Package appliedgo.net/what
