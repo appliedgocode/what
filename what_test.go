@@ -41,16 +41,16 @@ func TestAll(t *testing.T) {
 	}
 	Happens("what.Happens - package 'what' NOT enabled") // this should not print
 
-	wantRE := regexp.MustCompilePOSIX(`appliedgo.net/what\.TestAll: what\.Happens - all packages enabled
+	wantRE := regexp.MustCompile(`appliedgo.net/what\.TestAll: what\.Happens - all packages enabled
 appliedgo\.net/what\.If: If true
 \(int\) 23
-Func appliedgo.net/what\.TestAll in line \d\+ of file .*/what_test.go
+Func appliedgo.net/what\.TestAll in line \d+ of file .*/what_test.go
 Package appliedgo.net/what
 appliedgo\.net/what\.TestAll: what.Happens - package 'what' enabled
 appliedgo\.net/what\.TestAll: what.Happens - package 'appliedgo\.net/what' enabled
 `)
 	// "got" contains all log output from the above calls
 	if !wantRE.Match(got.Bytes()) {
-		t.Errorf("Got: %s\n\nWant: %s", got, wantRE.Find(got.Bytes()))
+		t.Errorf("Got: %s\n\nWant: %s", got, wantRE)
 	}
 }
