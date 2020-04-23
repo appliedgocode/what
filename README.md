@@ -5,7 +5,7 @@
 ```go
 import "appliedgo.net/what"
 ```
-
+(Do not use the direct path to the repo.)
 
 ## What does what do
 
