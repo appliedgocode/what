@@ -1,4 +1,4 @@
-module appliedgo.net/what
+module github.com/appliedgocode/what
 
 go 1.13
 
