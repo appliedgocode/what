@@ -1,5 +1,12 @@
 # What: debug-level logging that vanishes from production code
 
+## How to import the package
+
+```go
+import "appliedgo.net/what"
+```
+
+
 ## What does what do
 
 `what` is a set of simple and easy logging functions, suitable for tracing any kind of activities in your code. `what` can print the current function name, quickly `Printf`-format your data, and dumps data structures. 
