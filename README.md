@@ -1,5 +1,7 @@
 # What: debug-level logging that vanishes from production code
 
+[![Go Reference](https://pkg.go.dev/badge/appliedgo.net/what.svg)](https://pkg.go.dev/appliedgo.net/what)
+
 ## How to import the package
 
 ```go
