@@ -1,4 +1,4 @@
-// +build !what,!whatfunc
+//go:build !what && !whatfunc
 
 package what
 

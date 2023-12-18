@@ -1,3 +1,5 @@
+//go:build what || whatpackage || whatis || whatfunc || whathappens || whatif || whatslog
+
 package what
 
 // IMPORTANT: to run these tests, use build tag "what":

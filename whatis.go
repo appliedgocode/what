@@ -1,4 +1,4 @@
-// +build what whatis
+//go:build what || whatis
 
 package what
 

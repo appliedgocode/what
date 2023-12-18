@@ -1,4 +1,4 @@
-// +build what whathappens whatif whatfunc
+//go:build what || whathappens || whatif || whatfunc
 
 package what
 

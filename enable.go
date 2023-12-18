@@ -1,4 +1,4 @@
-// +build what whathappens whatif whatfunc
+//go:build what || whathappens || whatif || whatfunc || whatslog || whatis || whatpackage
 
 package what
 
@@ -46,7 +46,7 @@ func pkgname(skip int) (string, string) {
 			break
 		}
 	}
-	// post loop assert: startName is either 0 (for package main) or i+1
+	// post-loop assert: startName is either 0 (for package main) or i+1
 
 	// Search the first dot after the last /, it is the end of the package name
 	for i := startName; i < len(fn); i++ {
