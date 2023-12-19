@@ -3,5 +3,5 @@
 package what
 
 // Is pretty-prints data.
-func Is(v interface{}) {
+func Is(v any) {
 }

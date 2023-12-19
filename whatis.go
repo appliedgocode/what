@@ -9,7 +9,7 @@ import (
 )
 
 // Is pretty-prints data.
-func Is(v interface{}) {
+func Is(v any) {
 	spew.Fdump(log.Writer(), v)
 }
 
