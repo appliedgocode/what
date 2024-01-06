@@ -36,16 +36,26 @@ You have to explicitly enable `what` logging through build flags (see below).
 
 ```go
 what.Happens("Foo: %s", bar) // log.Printf("Foo: %s\n", bar)
+what.Happens("INFO", "message", "key1", value1) // like slog.Info()
 what.If(cond, "Foo: %s", bar) // only print if cond is true
 what.Func() // Print out the fully qualified function name
-what.Is(var) // dump the structure and contents of var 
+what.Is(var) // Dump the structure and contents of var 
+what.Package() // Print the current package's name
 ```
 
 Spread these calls across your code, especially in places you want to observe closer. 
 
-Debug-level logging is useful alongside unit testing as well as using a debugger. It does not attempt to replace any of these concepts.
+`what.Happens()` has two modes. 
+
+If the format string is either of "DEBUG", "INFO", "WARN", or "ERROR", the behavior is like `slog.Debug()`, `slog.Info()`, and so on. The first argument after the level keyword is the log message, and all subsequent arguments are key/value pairs, where the value can be of any type.
+
+If the format string is none of the above keywords, `what.Happens()` behaves like `log.Printf()`. 
+
+Debug-level logging with `what` is useful alongside unit testing as well as using a debugger. It does not attempt to replace any of these concepts.
 
 ### Enabling and disabling
+
+`what` logging can be enabled and disabled through build tags.
 
 #### Enable all functions
 
@@ -86,7 +96,7 @@ To enable specific packages for debug logging, set `WHAT` to a package name, or 
 
 #### Disable what
 
-Nothing easier than that! Without any of the above build tags, all funtions get replace by no-ops, ready for being optimized away entirely (if the compiler decides to do so).
+Nothing easier than that! Without any of the above build tags, all functions get replaced by no-ops, ready for being optimized away entirely (if the compiler decides to do so).
 
 * No log output 
 * No bloated binary
@@ -94,9 +104,13 @@ Nothing easier than that! Without any of the above build tags, all funtions get 
 
 ## Non-features
 
-* Uses only stdlib `log`, no custom logger configurable
+* Uses only stdlib `log`, no custom logger configurable.
 * No custom variable dumper/pretty-printer. At the moment, `what` uses `github.com/davecgh/go-spew`. See Spew's docs about the syntax used for printing a variable.
 
 ## Restrictions
 
-Although `go run` should recognize all build flags that `go build` recognizes (including `-tags`), it seems that `go run main.go -tags what` does not consider the tag. Use `go build -tags what && ./main` instead.
+Although `go run` should recognize all build flags that `go build` recognizes (including `-tags`), it seems that `go run main.go -tags what` does not consider the `what` tag. Use `go build -tags what && ./main` instead.
+
+## Compatibility
+
+- v0.1.6 requires Go 1.18 (replacement of `interface{}` with `any`)
