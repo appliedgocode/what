@@ -11,8 +11,8 @@ import (
 func Package() {
 	pkg, prnt := pkgname(2)
 	if len(prnt) > 0 {
-		log.Printf("Package %s/%s", prnt, pkg)
+		log.Printf("Package %s/%s\n", prnt, pkg)
 	} else {
-		log.Printf("Package %s", pkg)
+		log.Printf("Package %s\n", pkg)
 	}
 }
