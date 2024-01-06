@@ -1,4 +1,4 @@
-//go:build what || whatpackage || whatis || whatfunc || whathappens || whatif || whatslog
+//go:build what || whatpackage || whatis || whatfunc || whathappens || whatif
 
 package what
 
