@@ -1,4 +1,5 @@
-/* Package what provides a quick and convenient way of adding development-only log statements to your code.
+/*
+	Package what provides a quick and convenient way of adding development-only log statements to your code.
 
 Instead of firing up the debugger and stepping through each line one-by-one, spread a few what calls across the code you want to inspect, then run the code and watch the output.
 
