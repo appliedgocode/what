@@ -55,6 +55,30 @@ func verify(t *testing.T, gotbuf *bytes.Buffer, want string) {
 	}
 }
 
+type testStruct struct {
+	name string
+}
+
+// Implement DebugStringer for testStruct
+func (ts testStruct) DebugString() string {
+	return "DEBUG:" + ts.name
+}
+
+// TestDebugStringer tests the support for DebugString()
+func TestDebugStringer(t *testing.T) {
+	got := &bytes.Buffer{}
+	log.SetOutput(got)
+	log.SetFlags(0)
+
+	test := testStruct{name: "Test"}
+	Is(test)
+
+	want := "DEBUG:Test"
+	if got.String() != want {
+		t.Errorf("Got: `%s` Want: `%s`", got.String(), want)
+	}
+}
+
 func TestEnabling(t *testing.T) {
 	got := &bytes.Buffer{}
 	log.SetOutput(got) // write all log output into "got" for later matching
