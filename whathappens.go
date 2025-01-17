@@ -15,7 +15,7 @@ func Happens(fmt string, args ...any) {
 		switch fmt {
 		case "DEBUG", "INFO", "WARN", "ERROR":
 			log.SetFlags(0)
-			log.Printf(colorize(fmt, args...))
+			log.Print(colorize(fmt, args...))
 		default:
 			log.Printf(funcname(2)+": "+fmt+"\n", args...)
 		}
