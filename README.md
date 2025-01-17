@@ -13,7 +13,7 @@ import "appliedgo.net/what"
 
 `what` is a set of simple and easy logging functions, suitable for tracing any kind of activities in your code. `what` can print the current function name, quickly `Printf`-format your data, and dumps data structures. 
 
-And last not least, no `what` calls reach your production binary (unless you want it so). Debug-level logging is for developers only.
+And last not least, no `what` calls reach your production binary (unless you want it so). Debug-level logging is for developers only. *No more accidental data leaks in production through left-over debug logging statements.*
 
 
 ## Who need this? 
@@ -32,6 +32,10 @@ First of all, `what` is intended for debug-level logging *only*. So,
 
 You have to explicitly enable `what` logging through build flags (see below).
 
+## Why not just firing up a debugger?
+
+`what` is one of many debugging techniques. Sometimes, a little log output can prevent a time-consuming debugger session. `what` does not replace but complement your debugger.
+
 ### Available functions
 
 ```go
@@ -39,7 +43,7 @@ what.Happens("Foo: %s", bar) // log.Printf("Foo: %s\n", bar)
 what.Happens("INFO", "message", "key1", value1) // like slog.Info()
 what.If(cond, "Foo: %s", bar) // only print if cond is true
 what.Func() // Print out the fully qualified function name
-what.Is(var) // Dump the structure and contents of var 
+what.Is(var) // Dump the structure and contents of var. Is() recognizes a DebugStringer.
 what.Package() // Print the current package's name
 ```
 
@@ -72,8 +76,9 @@ And now just lean back and see your code talking about what it does.
 To reduce the noise, you can decide to compile only specific parts of `what`:
 
 * `whathappens` only enables `what.Happens()` and `what.If()`.
-* `whatfunc` only enables `what.Func()`.
 * `whatis` only enables `what.Is()`.
+* `whatfunc` only enables `what.Func()`.
+* `whatpackage` only enables `what.Package()`.
 
 All disabled functions get replaced by no-ops.
 
@@ -113,4 +118,4 @@ Although `go run` should recognize all build flags that `go build` recognizes (i
 
 ## Compatibility
 
-- v0.1.6 requires Go 1.18 (replacement of `interface{}` with `any`)
+- v0.1.6 and later require Go 1.18 (replacement of `interface{}` with `any`)
